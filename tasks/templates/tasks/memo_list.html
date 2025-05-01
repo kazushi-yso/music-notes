@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>メモ一覧</title>
+</head>
+<body>
+    <h1>メモ一覧</h1>
+    <ul>
+        {% for memo in memos %}
+            <li>
+                <a href="{% url 'memo_detail_view' memo.id %}">{{ memo.title }}</a>
+                （キー: {{ memo.key }}）
+            </li>
+        {% empty %}
+            <p>メモがありません。</p>
+        {% endfor %}
+    </ul>
+</body>
+<footer>
+    <a href="{% url 'create_memo' %}">メモ作成</a>
+</footer>
+</html>

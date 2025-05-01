@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    {% load static %}
+    <script src="{% static 'js/memo_delete.js' %}"></script>
+    <meta charset="UTF-8">
+    <title>メモ詳細</title>
+</head>
+<body>
+    <h1>{{ memo.title }}</h1>
+    <p><strong>キー:</strong> {{ memo.key }}</p>
+    <p><strong>コード進行:</strong> {{ memo.code }}</p>
+    <p><strong>度数:</strong> {{ memo.degree }}</p>
+    <a href="{% url 'memo_list' %}">メモ一覧に戻る</a>
+    <a href="{% url 'memo_edit' memo.id %}">このメモを編集</a>
+<footer>
+    <button id="delete-btn" data-memo-id="{{ memo.id }}">このメモを削除</button>
+</footer>
+</body>
+</html>

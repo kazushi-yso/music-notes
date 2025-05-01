@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>メモ管理</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <h1>メモを追加</h1>
+    
+    <form id="memoForm">
+        {% csrf_token %}
+        <input type="text" name="title" placeholder="曲名">
+        <input type="text" name="key" placeholder="調">
+        <input type="text" name="code" placeholder="コード進行">
+        <input type="text" name="degree" placeholder="コードの度数">
+        <button type="submit">追加</button>
+    </form>
+
+    <p id="message"></p>
+
+    <script src="{% static 'js/create.js' %}"></script>
+</body>
+<footer>
+    <a href="{% url 'memo_list' %}">メモ一覧へ</a>
+</footer>
+</html>

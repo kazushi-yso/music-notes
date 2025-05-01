@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>メモ編集</title>
+</head>
+<body>
+    <h1>メモを編集</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <label>タイトル: <input type="text" name="title" value="{{ memo.title }}"></label><br>
+        <label>キー: <input type="text" name="key" value="{{ memo.key }}"></label><br>
+        <label>コード進行: <textarea name="code">{{ memo.code }}</textarea></label><br>
+        <label>度数: <input type="text" name="degree" value="{{ memo.degree }}"></label><br>
+        <button type="submit">更新する</button>
+    </form>
+    <a href="{% url 'memo_detail_view' memo.id %}">戻る</a>
+</body>
+</html>
