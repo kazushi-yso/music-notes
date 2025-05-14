@@ -12,7 +12,11 @@ ENHARMONIC_KEYS = {
     "B": "Cb",
     "Cb": "B",
     "E": "Fb",
-    "Fb": "E"
+    # "Fb": "E",
+    # "E#": "F",
+    # "F": "E#",
+    # "B#": "C",
+    # "C": "B#"    
 }
 
 CHROMATIC_SCALE_SHARP = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
@@ -32,13 +36,27 @@ def build_major_scale(key):
         first_index = scale_base.index(key)
         note_index = (first_index + i) % 12
         note = scale_base[note_index]
-        scale.apennd(note)
+        scale.append(note)
     return scale
 #  first_index = scale_base.index(key)
 #     return [scale_base[(first_index + i) % 12] for i in MAJOR_SCALE_INTERVALS]
 
-def has_double_accidentals(scale):
-    for note in scale:
-        if '##' in note or 'bb' in note:
-            return True   
-# return any("##" in note or "bb" in note for note in scale)
+def get_letter(note):
+    for letter in "CDEFGAB":
+        if note.startswith(letter):
+            return letter
+        return None
+    
+def check_natural_notes(scale):
+    natural_notes = [get_letter(note) for note in scale]
+    return len(set(natural_notes)) == 7
+
+def choose_better_key(key):
+    scale = build_major_scale(key)
+    if not check_natural_notes(scale):
+        alt_key = ENHARMONIC_KEYS.get(key)
+        if alt_key:
+            alt_scale = build_major_scale(alt_key)
+            if check_natural_notes(alt_scale):
+                return alt_key
+        return key

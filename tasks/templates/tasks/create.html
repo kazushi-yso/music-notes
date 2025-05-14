@@ -18,6 +18,10 @@
         <input type="text" name="degree" placeholder="コードの度数">
         <button type="submit">追加</button>
     </form>
+    {% if selected_key %}
+    <h2>選択されたキー: {{ selected_key }}</h2>
+    <p>メジャースケール: {{ scale|join:", " }}</p>
+    {% endif %}
 
     <p id="message"></p>
 

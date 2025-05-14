@@ -6,7 +6,7 @@ from tasks.models import MemoModel
 from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404
 from django.shortcuts import redirect
-
+from .utils import choose_better_key, build_major_scale
 
 def index(request):
     if request.method == "GET":
@@ -15,19 +15,34 @@ def index(request):
 
 class MemoCreateView(View):
     def get(self,request):
-        return render(request, "tasks/create.html")
+        key = request.GET.get("key")
+        scale = []
+        selected_key = None
+        
+        if key:
+           selected_key = choose_better_key(key)
+           scale = build_major_scale(selected_key)
+            
+        return render(request, "tasks/create.html",{
+            "scale": scale,
+            "selected_key": selected_key
+        })
+
+    
     
     def post(self, request):
         title = request.POST.get("title")
         key = request.POST.get("key")
         code = request.POST.get("code")
         degree = request.POST.get("degree")
+        scale = request.POST.get("scale")
         
         memo = MemoModel.objects.create(
             title = title,
             key = key,
             code = code,
             degree = degree,
+            scale =scale,
         )
         return JsonResponse({"message": f"追加しました: {memo.title}"})
 
